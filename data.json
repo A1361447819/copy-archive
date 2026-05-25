@@ -17,17 +17,9 @@
     }
   },
   "viral": {
-    "own": [
-      {
-        "id": "e_mpkwzl6o05td",
-        "title": "1",
-        "content": "1",
-        "createdAt": 1779695900160,
-        "source": ""
-      }
-    ],
+    "own": [],
     "competitor": []
   },
-  "lastModified": 1779695900161,
+  "lastModified": 1779695907641,
   "version": 1
 }
