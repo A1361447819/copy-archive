@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文案档案 · Copy Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Noto+Serif+SC:wght@400;500;600;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4EFE6;
+    --bg-soft: #EBE4D6;
+    --card: #FBF8F2;
+    --card-hover: #FFFFFF;
+    --ink: #1C1917;
+    --ink-soft: #57534E;
+    --ink-faint: #8C857C;
+    --line: rgba(28, 25, 23, 0.10);
+    --line-soft: rgba(28, 25, 23, 0.06);
+    --accent: #8B2C20;
+    --accent-soft: #B85547;
+    --accent-bg: #F7E9E5;
+    --gold: #A88B3F;
+    --success: #4A7A3A;
+    --shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.04);
+    --shadow: 0 4px 16px rgba(28, 25, 23, 0.05), 0 1px 3px rgba(28, 25, 23, 0.04);
+    --shadow-lg: 0 20px 60px rgba(28, 25, 23, 0.12), 0 2px 6px rgba(28, 25, 23, 0.05);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Manrope', 'Noto Serif SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14.5px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  body {
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(184, 85, 71, 0.04), transparent 50%),
+      radial-gradient(circle at 88% 92%, rgba(168, 139, 63, 0.05), transparent 60%);
+  }
+
+  /* === Layout === */
+  .app {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  /* === Header === */
+  .header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 40px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .brand-mark {
+    width: 56px;
+    height: 56px;
+    border: 1px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--ink);
+    position: relative;
+  }
+  .brand-mark::before,
+  .brand-mark::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--ink);
+    background: var(--bg);
+  }
+  .brand-mark::before { top: -4px; left: -4px; }
+  .brand-mark::after { bottom: -4px; right: -4px; }
+
+  .brand-text h1 {
+    font-family: 'Fraunces', 'Noto Serif SC', serif;
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    font-variation-settings: "opsz" 120;
+    line-height: 1.1;
+  }
+  .brand-text p {
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-faint);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  /* Main nav tabs */
+  .main-nav {
+    display: flex;
+    gap: 4px;
+    background: var(--card);
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+  }
+  .main-nav button {
+    background: none;
+    border: none;
+    padding: 10px 22px;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink-faint);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .main-nav button:hover { color: var(--ink); }
+  .main-nav button.active {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .main-nav button svg { width: 15px; height: 15px; }
+
+  /* === Filter bar === */
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .filter-groups { display: flex; gap: 36px; flex-wrap: wrap; align-items: center; }
+  .filter-group { display: flex; align-items: center; gap: 14px; }
+  .filter-label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+  .pill-group {
+    display: flex;
+    border: 1px solid var(--line);
+    background: var(--card);
+  }
+  .pill-group button {
+    background: none;
+    border: none;
+    padding: 8px 18px;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.18s ease;
+    border-right: 1px solid var(--line);
+    font-weight: 500;
+  }
+  .pill-group button:last-child { border-right: none; }
+  .pill-group button:hover { color: var(--ink); background: var(--bg-soft); }
+  .pill-group button.active {
+    background: var(--ink);
+    color: var(--card);
+  }
+
+  .action-group { display: flex; gap: 10px; }
+
+  /* === Buttons === */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--bg);
+    cursor: pointer;
+    transition: all 0.18s ease;
+    letter-spacing: 0.01em;
+  }
+  .btn:hover {
+    background: transparent;
+    color: var(--ink);
+  }
+  .btn svg { width: 14px; height: 14px; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+  }
+  .btn-outline:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  /* === Content grid === */
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  /* === Card === */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 24px 24px 18px;
+    position: relative;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+    animation: cardIn 0.4s ease backwards;
+  }
+  .card:hover {
+    background: var(--card-hover);
+    box-shadow: var(--shadow);
+    transform: translateY(-1px);
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-family: 'Fraunces', 'Noto Serif SC', serif;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.35;
+    color: var(--ink);
+    font-variation-settings: "opsz" 30;
+    flex: 1;
+    word-break: break-word;
+  }
+  .card-tag {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    background: var(--bg-soft);
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .card-tag.gold { color: var(--gold); border-color: rgba(168, 139, 63, 0.3); }
+  .card-tag.accent { color: var(--accent); border-color: rgba(139, 44, 32, 0.2); background: var(--accent-bg); }
+
+  .card-meta {
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+    font-feature-settings: "tnum";
+  }
+
+  .card-content {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    max-height: 9em;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .card-content.expanded { max-height: none; }
+  .card-content::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2.5em;
+    background: linear-gradient(to bottom, transparent, var(--card));
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .card:hover .card-content::after { background: linear-gradient(to bottom, transparent, var(--card-hover)); }
+  .card-content.expanded::after { opacity: 0; }
+
+  .card-expand {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 11.5px;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 6px 0 0;
+    align-self: flex-start;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+  .card-expand:hover { text-decoration: underline; }
+
+  .card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .card-source {
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-style: italic;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 12px;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--line);
+    background: transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-soft);
+    transition: all 0.18s ease;
+    padding: 0;
+  }
+  .icon-btn svg { width: 15px; height: 15px; }
+  .icon-btn:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+    background: var(--bg-soft);
+  }
+  .icon-btn.danger:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-bg);
+  }
+  .icon-btn.success {
+    color: var(--success);
+    border-color: var(--success);
+    background: rgba(74, 122, 58, 0.08);
+  }
+  .icon-btn-group { display: flex; gap: 6px; }
+
+  /* Delete confirm */
+  .icon-btn.confirm-delete {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    width: auto;
+    padding: 0 12px;
+  }
+
+  /* === Empty state === */
+  .empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--ink-faint);
+  }
+  .empty-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 20px;
+    color: var(--ink-faint);
+    opacity: 0.5;
+  }
+  .empty-title {
+    font-family: 'Fraunces', 'Noto Serif SC', serif;
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+    font-weight: 400;
+  }
+  .empty-hint { font-size: 12.5px; letter-spacing: 0.05em; }
+
+  /* === Section === */
+  section { animation: sectionFade 0.35s ease; }
+  @keyframes sectionFade {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === Modal === */
+  .modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(28, 25, 23, 0.4);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal-card {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--line);
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow: auto;
+    box-shadow: var(--shadow-lg);
+    animation: modalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .modal-header h2 {
+    font-family: 'Fraunces', 'Noto Serif SC', serif;
+    font-weight: 500;
+    font-size: 21px;
+    letter-spacing: -0.005em;
+  }
+  .modal-body { padding: 24px 28px 28px; }
+
+  .form-field { margin-bottom: 18px; }
+  .form-field:last-child { margin-bottom: 0; }
+  .form-label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .form-input, .form-textarea, .form-select {
+    width: 100%;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    transition: border-color 0.18s ease;
+    resize: vertical;
+  }
+  .form-textarea { min-height: 200px; line-height: 1.6; font-family: inherit; }
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--ink);
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  /* === Toast === */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 12px 22px;
+    font-size: 13px;
+    border: 1px solid var(--ink);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .toast svg { width: 16px; height: 16px; }
+
+  /* === Stats bar === */
+  .stats {
+    display: flex;
+    gap: 28px;
+    margin-top: 14px;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+  }
+  .stats span strong {
+    color: var(--ink);
+    font-weight: 600;
+    font-family: 'Fraunces', serif;
+    font-size: 13.5px;
+    margin-right: 4px;
+  }
+
+  /* === Responsive === */
+  @media (max-width: 768px) {
+    .app { padding: 28px 20px 60px; }
+    .header { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .main-nav { width: 100%; }
+    .main-nav button { flex: 1; justify-content: center; }
+    .filter-bar { flex-direction: column; align-items: stretch; }
+    .filter-groups { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .action-group { justify-content: flex-end; }
+    .content-grid { grid-template-columns: 1fr; }
+    .brand-text h1 { font-size: 24px; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--line); border: 2px solid var(--bg); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ink-faint); }
+</style>
+</head>
+<body>
+
+<!-- === Reusable SVG icons === -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="icon-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 4H6.5A1.5 1.5 0 0 0 5 5.5v13A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V9z"/>
+      <path d="M14 4v5h5"/>
+      <path d="M8.5 13h7M8.5 16h5"/>
+    </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m12 3.5 2.6 5.5 6 .8-4.4 4.2 1.1 6L12 17.2 6.7 20l1.1-6L3.4 9.8l6-.8z"/>
+    </symbol>
+    <symbol id="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="11" height="11" rx="1"/>
+      <path d="M5 15V5.5A1.5 1.5 0 0 1 6.5 4H15"/>
+    </symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 7h16"/>
+      <path d="M9.5 7V4.5h5V7"/>
+      <path d="M6 7v12a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19V7"/>
+      <path d="M10 11v6M14 11v6"/>
+    </symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <path d="M12 5v14M5 12h14"/>
+    </symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 4v12"/>
+      <path d="m7.5 11.5 4.5 4.5 4.5-4.5"/>
+      <path d="M5 20h14"/>
+    </symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <path d="M6 6l12 12M18 6L6 18"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m5 12 5 5 9-11"/>
+    </symbol>
+    <symbol id="icon-empty" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="14" y="10" width="30" height="40" rx="1"/>
+      <path d="M44 10v8h8"/>
+      <path d="M44 18l8-8"/>
+      <path d="M22 24h14M22 30h16M22 36h10"/>
+      <circle cx="48" cy="46" r="8" stroke-dasharray="2 2"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand">
+      <div class="brand-mark">文</div>
+      <div class="brand-text">
+        <h1>文案档案</h1>
+        <p>Copy · Archive · Vault</p>
+      </div>
+    </div>
+    <nav class="main-nav" id="mainNav">
+      <button data-section="product" class="active">
+        <svg><use href="#icon-doc"/></svg>
+        产品文案
+      </button>
+      <button data-section="viral">
+        <svg><use href="#icon-star"/></svg>
+        爆款收藏
+      </button>
+    </nav>
+  </header>
+
+  <!-- ========== PRODUCT SECTION ========== -->
+  <section id="productSection">
+    <div class="filter-bar">
+      <div class="filter-groups">
+        <div class="filter-group">
+          <span class="filter-label">产品</span>
+          <div class="pill-group" id="productPills">
+            <button data-product="S5" class="active">S5</button>
+            <button data-product="X1">X1</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">类型</span>
+          <div class="pill-group" id="typePills">
+            <button data-type="graphic" class="active">图文文案</button>
+            <button data-type="video">视频脚本</button>
+          </div>
+        </div>
+      </div>
+      <div class="action-group">
+        <button class="btn" onclick="openModal('product')">
+          <svg><use href="#icon-plus"/></svg>
+          新建文案
+        </button>
+      </div>
+    </div>
+    <div class="content-grid" id="productGrid"></div>
+    <div class="stats" id="productStats"></div>
+  </section>
+
+  <!-- ========== VIRAL SECTION ========== -->
+  <section id="viralSection" hidden>
+    <div class="filter-bar">
+      <div class="filter-groups">
+        <div class="filter-group">
+          <span class="filter-label">来源</span>
+          <div class="pill-group" id="viralPills">
+            <button data-viral="own" class="active">自己的</button>
+            <button data-viral="competitor">同行的</button>
+          </div>
+        </div>
+      </div>
+      <div class="action-group">
+        <button class="btn btn-outline" onclick="exportViral()">
+          <svg><use href="#icon-download"/></svg>
+          导出全部
+        </button>
+        <button class="btn" onclick="openModal('viral')">
+          <svg><use href="#icon-plus"/></svg>
+          新建收藏
+        </button>
+      </div>
+    </div>
+    <div class="content-grid" id="viralGrid"></div>
+    <div class="stats" id="viralStats"></div>
+  </section>
+</div>
+
+<!-- ========== MODAL ========== -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-backdrop" onclick="closeModal()"></div>
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2 id="modalTitle">新建文案</h2>
+      <button class="icon-btn" onclick="closeModal()" aria-label="关闭">
+        <svg><use href="#icon-x"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="entryForm">
+        <input type="hidden" name="mode" value="product">
+
+        <!-- Product fields -->
+        <div id="productFields">
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">产品</label>
+              <select name="product" class="form-select">
+                <option value="S5">S5</option>
+                <option value="X1">X1</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label">类型</label>
+              <select name="type" class="form-select">
+                <option value="graphic">图文文案</option>
+                <option value="video">视频脚本</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Viral fields -->
+        <div id="viralFields" hidden>
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">来源</label>
+              <select name="viralType" class="form-select">
+                <option value="own">自己的</option>
+                <option value="competitor">同行的</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label">出处 / 账号 <span style="text-transform:none;letter-spacing:0;color:var(--ink-faint);font-weight:400;">（可选）</span></label>
+              <input type="text" name="source" class="form-input" placeholder="例：@某博主">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">标题</label>
+          <input type="text" name="title" class="form-input" required placeholder="给这条文案起个名字">
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">内容</label>
+          <textarea name="content" class="form-textarea" required placeholder="在这里粘贴或撰写文案内容…"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" onclick="closeModal()">取消</button>
+          <button type="submit" class="btn">保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <svg><use href="#icon-check"/></svg>
+  <span id="toastText">已复制</span>
+</div>
+
+<script>
+  /* ============ State ============ */
+  const STORAGE_KEY = 'copyArchive.v1';
+
+  const defaultState = {
+    product: {
+      S5: { graphic: [], video: [] },
+      X1: { graphic: [], video: [] }
+    },
+    viral: { own: [], competitor: [] },
+    ui: {
+      section: 'product',
+      product: 'S5',
+      type: 'graphic',
+      viralType: 'own'
+    }
+  };
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return structuredClone(defaultState);
+      const parsed = JSON.parse(raw);
+      // shallow merge to keep schema safe across updates
+      return {
+        product: {
+          S5: {
+            graphic: parsed.product?.S5?.graphic ?? [],
+            video: parsed.product?.S5?.video ?? []
+          },
+          X1: {
+            graphic: parsed.product?.X1?.graphic ?? [],
+            video: parsed.product?.X1?.video ?? []
+          }
+        },
+        viral: {
+          own: parsed.viral?.own ?? [],
+          competitor: parsed.viral?.competitor ?? []
+        },
+        ui: { ...defaultState.ui, ...(parsed.ui ?? {}) }
+      };
+    } catch (e) {
+      console.error('Load failed:', e);
+      return structuredClone(defaultState);
+    }
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {
+      console.error('Save failed:', e);
+      toast('保存失败，可能存储空间已满', true);
+    }
+  }
+
+  let state = loadState();
+
+  /* ============ Utils ============ */
+  function uid() {
+    return 'e_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  }
+
+  function fmtDate(ts) {
+    const d = new Date(ts);
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function toast(msg, isError = false) {
+    const el = document.getElementById('toast');
+    document.getElementById('toastText').textContent = msg;
+    el.style.background = isError ? 'var(--accent)' : 'var(--ink)';
+    el.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => el.classList.remove('show'), 2000);
+  }
+
+  /* ============ Section switching ============ */
+  document.getElementById('mainNav').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-section]');
+    if (!btn) return;
+    state.ui.section = btn.dataset.section;
+    saveState();
+    renderNav();
+    renderAll();
+  });
+
+  function renderNav() {
+    document.querySelectorAll('#mainNav button').forEach(b => {
+      b.classList.toggle('active', b.dataset.section === state.ui.section);
+    });
+    document.getElementById('productSection').hidden = state.ui.section !== 'product';
+    document.getElementById('viralSection').hidden = state.ui.section !== 'viral';
+  }
+
+  /* ============ Pill switching ============ */
+  document.getElementById('productPills').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-product]');
+    if (!btn) return;
+    state.ui.product = btn.dataset.product;
+    saveState();
+    renderProductPills();
+    renderProduct();
+  });
+  document.getElementById('typePills').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-type]');
+    if (!btn) return;
+    state.ui.type = btn.dataset.type;
+    saveState();
+    renderTypePills();
+    renderProduct();
+  });
+  document.getElementById('viralPills').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-viral]');
+    if (!btn) return;
+    state.ui.viralType = btn.dataset.viral;
+    saveState();
+    renderViralPills();
+    renderViral();
+  });
+
+  function renderProductPills() {
+    document.querySelectorAll('#productPills button').forEach(b =>
+      b.classList.toggle('active', b.dataset.product === state.ui.product));
+  }
+  function renderTypePills() {
+    document.querySelectorAll('#typePills button').forEach(b =>
+      b.classList.toggle('active', b.dataset.type === state.ui.type));
+  }
+  function renderViralPills() {
+    document.querySelectorAll('#viralPills button').forEach(b =>
+      b.classList.toggle('active', b.dataset.viral === state.ui.viralType));
+  }
+
+  /* ============ Rendering ============ */
+  function renderAll() {
+    renderProduct();
+    renderViral();
+  }
+
+  function renderProduct() {
+    const grid = document.getElementById('productGrid');
+    const list = state.product[state.ui.product]?.[state.ui.type] ?? [];
+    const typeLabel = state.ui.type === 'graphic' ? '图文文案' : '视频脚本';
+    const tagClass = state.ui.type === 'video' ? 'gold' : '';
+
+    if (list.length === 0) {
+      grid.innerHTML = emptyTpl(`暂无 ${state.ui.product} · ${typeLabel}`, '点击右上「新建文案」开始记录');
+    } else {
+      grid.innerHTML = list.map((item, idx) => cardTpl({
+        ...item,
+        tag: typeLabel,
+        tagClass,
+        idx
+      }, 'product')).join('');
+    }
+
+    // stats
+    const s = state.product[state.ui.product];
+    document.getElementById('productStats').innerHTML = `
+      <span><strong>${s.graphic.length}</strong>图文</span>
+      <span><strong>${s.video.length}</strong>视频脚本</span>
+    `;
+  }
+
+  function renderViral() {
+    const grid = document.getElementById('viralGrid');
+    const list = state.viral[state.ui.viralType] ?? [];
+    const label = state.ui.viralType === 'own' ? '自己的爆款' : '同行的爆款';
+    const tagClass = 'accent';
+
+    if (list.length === 0) {
+      grid.innerHTML = emptyTpl(`暂无${label}`, '点击右上「新建收藏」存入第一条');
+    } else {
+      grid.innerHTML = list.map((item, idx) => cardTpl({
+        ...item,
+        tag: state.ui.viralType === 'own' ? '自己' : '同行',
+        tagClass,
+        idx
+      }, 'viral')).join('');
+    }
+
+    document.getElementById('viralStats').innerHTML = `
+      <span><strong>${state.viral.own.length}</strong>自己</span>
+      <span><strong>${state.viral.competitor.length}</strong>同行</span>
+      <span><strong>${state.viral.own.length + state.viral.competitor.length}</strong>总计</span>
+    `;
+  }
+
+  function emptyTpl(title, hint) {
+    return `
+      <div class="empty">
+        <svg class="empty-icon"><use href="#icon-empty"/></svg>
+        <div class="empty-title">${escapeHtml(title)}</div>
+        <div class="empty-hint">${escapeHtml(hint)}</div>
+      </div>`;
+  }
+
+  function cardTpl(item, kind) {
+    const sourceLine = item.source
+      ? `<div class="card-source">来源：${escapeHtml(item.source)}</div>`
+      : `<div class="card-source"></div>`;
+    return `
+      <article class="card" data-id="${item.id}" data-kind="${kind}" style="animation-delay:${item.idx * 30}ms">
+        <div class="card-header">
+          <h3 class="card-title">${escapeHtml(item.title)}</h3>
+          <span class="card-tag ${item.tagClass || ''}">${escapeHtml(item.tag)}</span>
+        </div>
+        <div class="card-meta">${fmtDate(item.createdAt)}</div>
+        <div class="card-content" id="content-${item.id}">${escapeHtml(item.content)}</div>
+        <button class="card-expand" onclick="toggleExpand('${item.id}', this)">展开全文 ↓</button>
+        <div class="card-actions">
+          ${sourceLine}
+          <div class="icon-btn-group">
+            <button class="icon-btn" onclick="copyEntry('${kind}','${item.id}', this)" title="复制" aria-label="复制">
+              <svg><use href="#icon-copy"/></svg>
+            </button>
+            <button class="icon-btn danger" onclick="deleteEntry('${kind}','${item.id}', this)" title="删除" aria-label="删除">
+              <svg><use href="#icon-trash"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  // Toggle long content expansion
+  function toggleExpand(id, btn) {
+    const el = document.getElementById('content-' + id);
+    if (!el) return;
+    const isExpanded = el.classList.toggle('expanded');
+    btn.textContent = isExpanded ? '收起 ↑' : '展开全文 ↓';
+  }
+
+  // Hide expand button if content doesn't overflow (run after render via observer-style check)
+  function trimExpandButtons() {
+    document.querySelectorAll('.card-content').forEach(el => {
+      const btn = el.nextElementSibling;
+      if (btn && btn.classList.contains('card-expand')) {
+        // Compare scrollHeight vs clientHeight
+        if (el.scrollHeight <= el.clientHeight + 4) {
+          btn.style.display = 'none';
+        } else {
+          btn.style.display = '';
+        }
+      }
+    });
+  }
+
+  /* ============ Actions: Copy / Delete ============ */
+  function findEntry(kind, id) {
+    if (kind === 'product') {
+      const list = state.product[state.ui.product][state.ui.type];
+      const i = list.findIndex(x => x.id === id);
+      return { list, idx: i, entry: i >= 0 ? list[i] : null };
+    } else {
+      const list = state.viral[state.ui.viralType];
+      const i = list.findIndex(x => x.id === id);
+      return { list, idx: i, entry: i >= 0 ? list[i] : null };
+    }
+  }
+
+  async function copyEntry(kind, id, btn) {
+    const { entry } = findEntry(kind, id);
+    if (!entry) return;
+    try {
+      await navigator.clipboard.writeText(entry.content);
+      // visual feedback
+      btn.classList.add('success');
+      const old = btn.innerHTML;
+      btn.innerHTML = '<svg><use href="#icon-check"/></svg>';
+      toast('已复制到剪贴板');
+      setTimeout(() => {
+        btn.classList.remove('success');
+        btn.innerHTML = old;
+      }, 1400);
+    } catch (e) {
+      // Fallback
+      const ta = document.createElement('textarea');
+      ta.value = entry.content;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); toast('已复制到剪贴板'); }
+      catch (err) { toast('复制失败，请手动复制', true); }
+      ta.remove();
+    }
+  }
+
+  function deleteEntry(kind, id, btn) {
+    // Two-step delete confirmation inline
+    if (!btn.dataset.confirm) {
+      btn.dataset.confirm = '1';
+      btn.classList.add('confirm-delete');
+      btn.innerHTML = '确认删除';
+      btn.setAttribute('title', '再次点击确认');
+      // reset after 3s
+      btn._reset = setTimeout(() => {
+        btn.dataset.confirm = '';
+        btn.classList.remove('confirm-delete');
+        btn.innerHTML = '<svg><use href="#icon-trash"/></svg>';
+        btn.setAttribute('title', '删除');
+      }, 3000);
+      return;
+    }
+
+    clearTimeout(btn._reset);
+    const { list, idx } = findEntry(kind, id);
+    if (idx < 0) return;
+    // Animate out
+    const card = btn.closest('.card');
+    if (card) {
+      card.style.transition = 'all 0.25s ease';
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(-4px)';
+    }
+    setTimeout(() => {
+      list.splice(idx, 1);
+      saveState();
+      if (kind === 'product') renderProduct(); else renderViral();
+      trimExpandButtons();
+      toast('已删除');
+    }, 200);
+  }
+
+  /* ============ Modal ============ */
+  function openModal(mode) {
+    const modal = document.getElementById('modal');
+    const form = document.getElementById('entryForm');
+    form.reset();
+    form.elements.mode.value = mode;
+    document.getElementById('modalTitle').textContent =
+      mode === 'product' ? '新建文案' : '新建爆款收藏';
+    document.getElementById('productFields').hidden = mode !== 'product';
+    document.getElementById('viralFields').hidden = mode !== 'viral';
+
+    // Preselect current filter values
+    if (mode === 'product') {
+      form.elements.product.value = state.ui.product;
+      form.elements.type.value = state.ui.type;
+    } else {
+      form.elements.viralType.value = state.ui.viralType;
+    }
+
+    modal.hidden = false;
+    setTimeout(() => form.elements.title.focus(), 100);
+  }
+
+  function closeModal() {
+    document.getElementById('modal').hidden = true;
+  }
+
+  // Form submit
+  document.getElementById('entryForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const mode = fd.get('mode');
+    const title = fd.get('title').trim();
+    const content = fd.get('content').trim();
+    if (!title || !content) return;
+
+    const entry = {
+      id: uid(),
+      title,
+      content,
+      createdAt: Date.now()
+    };
+
+    if (mode === 'product') {
+      const product = fd.get('product');
+      const type = fd.get('type');
+      state.product[product][type].unshift(entry);
+      // jump to that filter
+      state.ui.product = product;
+      state.ui.type = type;
+      renderProductPills();
+      renderTypePills();
+      renderProduct();
+    } else {
+      const viralType = fd.get('viralType');
+      entry.source = (fd.get('source') || '').trim();
+      state.viral[viralType].unshift(entry);
+      state.ui.viralType = viralType;
+      renderViralPills();
+      renderViral();
+    }
+
+    saveState();
+    closeModal();
+    trimExpandButtons();
+    toast('已保存');
+  });
+
+  // Esc to close modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !document.getElementById('modal').hidden) {
+      closeModal();
+    }
+  });
+
+  /* ============ Export viral ============ */
+  function exportViral() {
+    const own = state.viral.own;
+    const comp = state.viral.competitor;
+    if (own.length === 0 && comp.length === 0) {
+      toast('收藏为空，没有可导出的内容', true);
+      return;
+    }
+
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    const stamp = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    const fileStamp = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}`;
+
+    const divider = '═'.repeat(50);
+    const sub = '─'.repeat(50);
+
+    let out = '';
+    out += divider + '\n';
+    out += '       爆款文案收藏 · 导出\n';
+    out += `       导出时间：${stamp}\n`;
+    out += `       自己 ${own.length} 条　|　同行 ${comp.length} 条　|　总计 ${own.length + comp.length} 条\n`;
+    out += divider + '\n\n';
+
+    const renderSection = (title, list) => {
+      let s = '';
+      s += `【${title}】（${list.length} 条）\n`;
+      s += sub + '\n\n';
+      if (list.length === 0) {
+        s += '（暂无内容）\n\n';
+      } else {
+        list.forEach((item, i) => {
+          s += `${i + 1}. ${item.title}\n`;
+          s += `   保存时间：${fmtDate(item.createdAt)}\n`;
+          if (item.source) s += `   出处：${item.source}\n`;
+          s += '\n';
+          s += item.content + '\n';
+          s += '\n' + sub + '\n\n';
+        });
+      }
+      return s;
+    };
+
+    out += renderSection('自己的爆款', own);
+    out += '\n';
+    out += renderSection('同行的爆款', comp);
+
+    const blob = new Blob([out], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `爆款文案_${fileStamp}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    toast(`已导出 ${own.length + comp.length} 条文案`);
+  }
+
+  /* ============ Init ============ */
+  function init() {
+    renderNav();
+    renderProductPills();
+    renderTypePills();
+    renderViralPills();
+    renderAll();
+    // wait for layout
+    requestAnimationFrame(() => requestAnimationFrame(trimExpandButtons));
+    window.addEventListener('resize', () => {
+      clearTimeout(window._rs);
+      window._rs = setTimeout(trimExpandButtons, 150);
+    });
+  }
+
+  init();
+</script>
+</body>
+</html>
