@@ -621,6 +621,67 @@
   .btn-text:hover { color: var(--ink); text-decoration: underline; }
   .btn-text.danger-text:hover { color: var(--accent); }
 
+  /* === Smart paste === */
+  .smart-paste {
+    margin-bottom: 22px;
+    border: 1px dashed var(--line);
+    background: var(--bg-soft);
+  }
+  .smart-paste-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-align: left;
+    transition: color 0.18s ease;
+  }
+  .smart-paste-toggle:hover { color: var(--ink); }
+  .smart-paste-toggle svg { width: 15px; height: 15px; color: var(--gold); flex-shrink: 0; }
+  .smart-paste-toggle svg.chev {
+    margin-left: auto;
+    width: 14px;
+    height: 14px;
+    color: var(--ink-faint);
+    transition: transform 0.2s ease;
+  }
+  .smart-paste.open .smart-paste-toggle svg.chev { transform: rotate(180deg); }
+  .smart-paste-toggle span {
+    flex: 1;
+    letter-spacing: 0.02em;
+  }
+  .smart-paste-body {
+    padding: 0 16px 16px;
+    animation: smartIn 0.2s ease;
+  }
+  @keyframes smartIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .smart-paste-hint {
+    font-size: 12px;
+    color: var(--ink-faint);
+    line-height: 1.6;
+    margin: 0 0 12px;
+  }
+  .smart-paste-body textarea {
+    background: var(--card);
+    min-height: 140px;
+  }
+  .smart-paste-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .smart-paste-actions .btn svg { width: 14px; height: 14px; }
+
   .form-field { margin-bottom: 18px; }
   .form-field:last-child { margin-bottom: 0; }
   .form-label {
@@ -811,6 +872,14 @@
       <path d="M12 20h9"/>
       <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
     </symbol>
+    <symbol id="icon-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3 L13.5 9 L19 10.5 L13.5 12 L12 18 L10.5 12 L5 10.5 L10.5 9 Z"/>
+      <path d="M19 4 L19.7 6 L21.5 6.5 L19.7 7 L19 9 L18.3 7 L16.5 6.5 L18.3 6 Z"/>
+      <path d="M5 15 L5.5 16.5 L7 17 L5.5 17.5 L5 19 L4.5 17.5 L3 17 L4.5 16.5 Z"/>
+    </symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m6 9 6 6 6-6"/>
+    </symbol>
   </defs>
 </svg>
 
@@ -914,6 +983,26 @@
       <form id="entryForm">
         <input type="hidden" name="mode" value="product">
         <input type="hidden" name="editId" value="">
+
+        <!-- Smart paste section -->
+        <div class="smart-paste" id="smartPaste">
+          <button type="button" class="smart-paste-toggle" id="smartPasteToggle" onclick="toggleSmartPaste()">
+            <svg><use href="#icon-sparkle"/></svg>
+            <span>智能识别：从完整文案中自动提取标题和正文</span>
+            <svg class="chev"><use href="#icon-chevron-down"/></svg>
+          </button>
+          <div class="smart-paste-body" hidden id="smartPasteBody">
+            <p class="smart-paste-hint">把含「标题：」「---」分隔线、AI 开头说明、结尾点评的完整文案粘进来，点识别就自动拆分填入下方。</p>
+            <textarea class="form-textarea" id="smartPasteInput" placeholder="粘贴完整文案到这里…" rows="8"></textarea>
+            <div class="smart-paste-actions">
+              <button type="button" class="btn-text" onclick="closeSmartPaste()">收起</button>
+              <button type="button" class="btn" onclick="runSmartDetect()">
+                <svg><use href="#icon-sparkle"/></svg>
+                识别并填入
+              </button>
+            </div>
+          </div>
+        </div>
 
         <!-- Product fields -->
         <div id="productFields">
@@ -1380,6 +1469,116 @@
     }, 200);
   }
 
+  /* ============ Smart paste parser ============ */
+  function parseSmartPaste(text) {
+    if (!text || !text.trim()) return { title: '', content: '', detected: false };
+
+    const raw = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim();
+
+    // Separator pattern: lines that are just dashes/equals/stars/etc, 3+ chars
+    const sepRe = /^[\s\-—–=*#~_·•・\.━─]{3,}$/;
+    const lines = raw.split('\n');
+    const chunks = [];
+    let cur = [];
+    for (const ln of lines) {
+      if (sepRe.test(ln.trim())) {
+        if (cur.some(l => l.trim())) chunks.push(cur.join('\n'));
+        cur = [];
+      } else {
+        cur.push(ln);
+      }
+    }
+    if (cur.some(l => l.trim())) chunks.push(cur.join('\n'));
+    if (chunks.length === 0) chunks.push(raw);
+
+    // Helper: detect "commentary" chunks (AI explanations)
+    const isCommentary = (chunk) => {
+      const trimmed = chunk.trim();
+      if (trimmed.length > 400) return false; // Long chunks unlikely to be commentary
+      // Starts with phrases like 这篇/这条/这个/这版 + 试试/适合/主打/突出/采用/走的是
+      const commentaryStart = /^(这[篇条个版段]|本[篇条]|此[篇条]).{0,8}(试试|适合|主打|突出|采用|走|是|侧重|强调|偏|针对)/m;
+      // Or ends with hints like 你看看/看看这个/调调/可以的话
+      const commentaryEnd = /(你看看|看看这个|这[个种]调调|可以的话|你觉得[^。]*[?？]?)\s*[～~。.!！]*\s*$/m;
+      return commentaryStart.test(trimmed) || commentaryEnd.test(trimmed);
+    };
+
+    // Pick the main chunk: prefer one with 标题：, else longest non-commentary
+    let best = chunks.find(c => /^\s*(标题|title)\s*[:：]/im.test(c));
+    if (!best) {
+      const candidates = chunks.filter(c => !isCommentary(c));
+      best = (candidates.length ? candidates : chunks)
+        .reduce((a, b) => b.length > a.length ? b : a, '');
+    }
+
+    let title = '';
+    let content = best.trim();
+
+    // Try 标题：xxx pattern
+    const titleMatch = content.match(/^\s*(?:标题|title)\s*[:：]\s*(.+)$/im);
+    if (titleMatch) {
+      title = titleMatch[1].trim();
+      content = content.replace(/^\s*(?:标题|title)\s*[:：]\s*.+$/im, '').trim();
+    } else if (chunks.length > 1) {
+      // No 标题 prefix but there were separators — use first non-empty line of best chunk
+      const bestLines = best.split('\n').map(l => l.trim()).filter(Boolean);
+      if (bestLines.length > 1) {
+        title = bestLines[0];
+        content = best.split('\n').slice(best.split('\n').findIndex(l => l.trim() === bestLines[0]) + 1).join('\n').trim();
+      }
+    }
+
+    // Strip 文案/正文 prefix if it appears at content start
+    content = content.replace(/^\s*(?:文案|正文|内容|body|content)\s*[:：]\s*/i, '');
+    // Collapse 3+ blank lines
+    content = content.replace(/\n{3,}/g, '\n\n').trim();
+    // Strip wrapping quotes if the entire content is wrapped
+    if (/^[「『"'"][\s\S]+[」』"'"]$/.test(content)) {
+      content = content.replace(/^[「『"'"]/, '').replace(/[」』"'"]$/, '').trim();
+    }
+
+    const detected = !!(title || chunks.length > 1);
+    return { title, content, detected };
+  }
+
+  function toggleSmartPaste() {
+    const wrap = document.getElementById('smartPaste');
+    const body = document.getElementById('smartPasteBody');
+    const isOpen = !body.hidden;
+    body.hidden = isOpen;
+    wrap.classList.toggle('open', !isOpen);
+    if (!isOpen) {
+      setTimeout(() => document.getElementById('smartPasteInput').focus(), 50);
+    }
+  }
+
+  function closeSmartPaste() {
+    document.getElementById('smartPasteBody').hidden = true;
+    document.getElementById('smartPaste').classList.remove('open');
+    document.getElementById('smartPasteInput').value = '';
+  }
+
+  function runSmartDetect() {
+    const input = document.getElementById('smartPasteInput');
+    const raw = input.value;
+    if (!raw.trim()) {
+      toast('请先粘贴文案到上方框中', true);
+      return;
+    }
+    const { title, content, detected } = parseSmartPaste(raw);
+    if (!title && !content) {
+      toast('未识别到有效内容', true);
+      return;
+    }
+    const form = document.getElementById('entryForm');
+    if (title) form.elements.title.value = title;
+    if (content) form.elements.content.value = content;
+    // Close the smart paste section
+    closeSmartPaste();
+    toast(detected ? '已识别并填入' : '已填入（未检测到标题，请检查）');
+    // Scroll the title field into view
+    setTimeout(() => form.elements.title.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+  }
+
   /* ============ Modal ============ */
   function openModal(mode, editData = null) {
     const modal = document.getElementById('modal');
@@ -1387,6 +1586,10 @@
     form.reset();
     form.elements.mode.value = mode;
     form.elements.editId.value = editData ? editData.id : '';
+
+    // Reset smart paste section (collapsed by default, hidden in edit mode)
+    closeSmartPaste();
+    document.getElementById('smartPaste').hidden = !!editData;
 
     const isEditing = !!editData;
     document.getElementById('modalTitle').textContent = isEditing
