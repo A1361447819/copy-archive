@@ -296,6 +296,43 @@
     font-variation-settings: "opsz" 30;
     flex: 1;
     word-break: break-word;
+    cursor: pointer;
+    transition: color 0.18s ease;
+    position: relative;
+  }
+  .card-title:hover {
+    color: var(--accent);
+  }
+  .card-title:hover::after {
+    content: '点击复制';
+    position: absolute;
+    top: -22px;
+    left: 0;
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    background: var(--bg);
+    padding: 2px 8px;
+    border: 1px solid var(--line);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0.95;
+  }
+  .card-title.copied {
+    color: var(--success);
+  }
+  .card-title.copied::after {
+    content: '✓ 标题已复制';
+    color: var(--success);
+    border-color: rgba(74, 122, 58, 0.3);
+    background: rgba(74, 122, 58, 0.08);
+  }
+
+  .meta-updated {
+    color: var(--gold);
+    margin-left: 8px;
+    font-style: italic;
   }
   .card-tag {
     font-size: 10px;
@@ -770,6 +807,10 @@
       <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/>
       <path d="M2 2l20 20"/>
     </symbol>
+    <symbol id="icon-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 20h9"/>
+      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+    </symbol>
   </defs>
 </svg>
 
@@ -872,6 +913,7 @@
     <div class="modal-body">
       <form id="entryForm">
         <input type="hidden" name="mode" value="product">
+        <input type="hidden" name="editId" value="">
 
         <!-- Product fields -->
         <div id="productFields">
@@ -1210,19 +1252,26 @@
     const sourceLine = item.source
       ? `<div class="card-source">来源：${escapeHtml(item.source)}</div>`
       : `<div class="card-source"></div>`;
+    // Pre-encode the meta fields edit needs (avoid passing strings through JS attrs)
+    const updatedNote = item.updatedAt
+      ? `<span class="meta-updated">· 编辑于 ${fmtDate(item.updatedAt)}</span>`
+      : '';
     return `
       <article class="card" data-id="${item.id}" data-kind="${kind}" style="animation-delay:${item.idx * 30}ms">
         <div class="card-header">
-          <h3 class="card-title">${escapeHtml(item.title)}</h3>
+          <h3 class="card-title" onclick="copyTitle('${kind}','${item.id}', this)" title="点击复制标题">${escapeHtml(item.title)}</h3>
           <span class="card-tag ${item.tagClass || ''}">${escapeHtml(item.tag)}</span>
         </div>
-        <div class="card-meta">${fmtDate(item.createdAt)}</div>
+        <div class="card-meta">${fmtDate(item.createdAt)}${updatedNote}</div>
         <div class="card-content" id="content-${item.id}">${escapeHtml(item.content)}</div>
         <button class="card-expand" onclick="toggleExpand('${item.id}', this)">展开全文 ↓</button>
         <div class="card-actions">
           ${sourceLine}
           <div class="icon-btn-group">
-            <button class="icon-btn" onclick="copyEntry('${kind}','${item.id}', this)" title="复制" aria-label="复制">
+            <button class="icon-btn" onclick="editEntry('${kind}','${item.id}')" title="编辑" aria-label="编辑">
+              <svg><use href="#icon-edit"/></svg>
+            </button>
+            <button class="icon-btn" onclick="copyEntry('${kind}','${item.id}', this)" title="复制内容" aria-label="复制内容">
               <svg><use href="#icon-copy"/></svg>
             </button>
             <button class="icon-btn danger" onclick="deleteEntry('${kind}','${item.id}', this)" title="删除" aria-label="删除">
@@ -1332,22 +1381,40 @@
   }
 
   /* ============ Modal ============ */
-  function openModal(mode) {
+  function openModal(mode, editData = null) {
     const modal = document.getElementById('modal');
     const form = document.getElementById('entryForm');
     form.reset();
     form.elements.mode.value = mode;
-    document.getElementById('modalTitle').textContent =
-      mode === 'product' ? '新建文案' : '新建爆款收藏';
+    form.elements.editId.value = editData ? editData.id : '';
+
+    const isEditing = !!editData;
+    document.getElementById('modalTitle').textContent = isEditing
+      ? (mode === 'product' ? '编辑文案' : '编辑收藏')
+      : (mode === 'product' ? '新建文案' : '新建爆款收藏');
+
     document.getElementById('productFields').hidden = mode !== 'product';
     document.getElementById('viralFields').hidden = mode !== 'viral';
 
-    // Preselect current filter values
-    if (mode === 'product') {
-      form.elements.product.value = state.ui.product;
-      form.elements.type.value = state.ui.type;
+    if (isEditing) {
+      // Pre-fill from editData
+      form.elements.title.value = editData.title;
+      form.elements.content.value = editData.content;
+      if (mode === 'product') {
+        form.elements.product.value = editData.product;
+        form.elements.type.value = editData.type;
+      } else {
+        form.elements.viralType.value = editData.viralType;
+        form.elements.source.value = editData.source || '';
+      }
     } else {
-      form.elements.viralType.value = state.ui.viralType;
+      // Preselect current filter values
+      if (mode === 'product') {
+        form.elements.product.value = state.ui.product;
+        form.elements.type.value = state.ui.type;
+      } else {
+        form.elements.viralType.value = state.ui.viralType;
+      }
     }
 
     modal.hidden = false;
@@ -1358,15 +1425,117 @@
     document.getElementById('modal').hidden = true;
   }
 
+  // Open modal in edit mode
+  function editEntry(kind, id) {
+    const { entry } = findEntry(kind, id);
+    if (!entry) return;
+    const editData = {
+      id: entry.id,
+      title: entry.title,
+      content: entry.content
+    };
+    if (kind === 'product') {
+      editData.product = state.ui.product;
+      editData.type = state.ui.type;
+      openModal('product', editData);
+    } else {
+      editData.viralType = state.ui.viralType;
+      editData.source = entry.source || '';
+      openModal('viral', editData);
+    }
+  }
+
+  // Copy just the title
+  async function copyTitle(kind, id, titleEl) {
+    const { entry } = findEntry(kind, id);
+    if (!entry) return;
+    try {
+      await navigator.clipboard.writeText(entry.title);
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = entry.title;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (err) { toast('复制失败', true); return; }
+      ta.remove();
+    }
+    titleEl.classList.add('copied');
+    toast('已复制标题');
+    setTimeout(() => titleEl.classList.remove('copied'), 1200);
+  }
+
   // Form submit
   document.getElementById('entryForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const fd = new FormData(e.target);
     const mode = fd.get('mode');
+    const editId = fd.get('editId');
     const title = fd.get('title').trim();
     const content = fd.get('content').trim();
     if (!title || !content) return;
 
+    if (editId) {
+      // === EDIT MODE: update existing entry in place ===
+      // Find across all lists since user may have switched filters
+      let found = null;
+      if (mode === 'product') {
+        outer: for (const p of ['S5', 'X1']) {
+          for (const t of ['graphic', 'video']) {
+            const list = state.product[p][t];
+            const i = list.findIndex(x => x.id === editId);
+            if (i >= 0) { found = { list, idx: i, kind: 'product' }; break outer; }
+          }
+        }
+      } else {
+        for (const v of ['own', 'competitor']) {
+          const list = state.viral[v];
+          const i = list.findIndex(x => x.id === editId);
+          if (i >= 0) { found = { list, idx: i, kind: 'viral' }; break; }
+        }
+      }
+      if (!found) {
+        toast('未找到原条目', true);
+        closeModal();
+        return;
+      }
+      const orig = found.list[found.idx];
+      orig.title = title;
+      orig.content = content;
+      orig.updatedAt = Date.now();
+      if (mode === 'viral') {
+        orig.source = (fd.get('source') || '').trim();
+      }
+      // If user changed product/type/viralType while editing, move the entry
+      if (mode === 'product') {
+        const newProduct = fd.get('product');
+        const newType = fd.get('type');
+        if (newProduct !== state.ui.product || newType !== state.ui.type) {
+          found.list.splice(found.idx, 1);
+          state.product[newProduct][newType].unshift(orig);
+          state.ui.product = newProduct;
+          state.ui.type = newType;
+          renderProductPills();
+          renderTypePills();
+        }
+        renderProduct();
+      } else {
+        const newViral = fd.get('viralType');
+        if (newViral !== state.ui.viralType) {
+          found.list.splice(found.idx, 1);
+          state.viral[newViral].unshift(orig);
+          state.ui.viralType = newViral;
+          renderViralPills();
+        }
+        renderViral();
+      }
+      saveState();
+      closeModal();
+      trimExpandButtons();
+      toast('已更新');
+      return;
+    }
+
+    // === CREATE MODE: new entry ===
     const entry = {
       id: uid(),
       title,
@@ -1378,7 +1547,6 @@
       const product = fd.get('product');
       const type = fd.get('type');
       state.product[product][type].unshift(entry);
-      // jump to that filter
       state.ui.product = product;
       state.ui.type = type;
       renderProductPills();
