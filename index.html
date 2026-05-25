@@ -142,6 +142,36 @@
   }
   .main-nav button svg { width: 15px; height: 15px; }
 
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .sync-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    transition: all 0.18s ease;
+  }
+  .sync-badge:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .sync-badge svg { width: 14px; height: 14px; }
+  .sync-badge.synced { color: var(--success); border-color: rgba(74, 122, 58, 0.3); background: rgba(74, 122, 58, 0.06); }
+  .sync-badge.syncing svg { animation: spin 1s linear infinite; }
+  .sync-badge.error { color: var(--accent); border-color: rgba(139, 44, 32, 0.3); background: var(--accent-bg); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
   /* === Filter bar === */
   .filter-bar {
     display: flex;
@@ -473,6 +503,87 @@
   }
   .modal-body { padding: 24px 28px 28px; }
 
+  .settings-intro {
+    padding: 14px 16px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--gold);
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .settings-intro p { margin: 0; }
+
+  .form-hint {
+    margin-top: 8px;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    line-height: 1.5;
+  }
+  .form-hint a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .form-hint a:hover { text-decoration: underline; }
+
+  .pat-input-wrap {
+    position: relative;
+  }
+  .pat-input-wrap input { padding-right: 42px; }
+  .pat-toggle {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--ink-faint);
+    padding: 0;
+  }
+  .pat-toggle:hover { color: var(--ink); }
+  .pat-toggle svg { width: 16px; height: 16px; }
+
+  .settings-status {
+    padding: 12px 14px;
+    margin-top: 16px;
+    font-size: 13px;
+    border: 1px solid var(--line);
+    line-height: 1.5;
+  }
+  .settings-status.success {
+    color: var(--success);
+    border-color: rgba(74, 122, 58, 0.3);
+    background: rgba(74, 122, 58, 0.06);
+  }
+  .settings-status.error {
+    color: var(--accent);
+    border-color: rgba(139, 44, 32, 0.3);
+    background: var(--accent-bg);
+  }
+  .settings-status.info {
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+  }
+
+  .btn-text {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    padding: 9px 14px;
+    color: var(--ink-soft);
+  }
+  .btn-text:hover { color: var(--ink); text-decoration: underline; }
+  .btn-text.danger-text:hover { color: var(--accent); }
+
   .form-field { margin-bottom: 18px; }
   .form-field:last-child { margin-bottom: 0; }
   .form-label {
@@ -560,6 +671,8 @@
   @media (max-width: 768px) {
     .app { padding: 28px 20px 60px; }
     .header { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .header-right { width: 100%; flex-direction: column-reverse; align-items: stretch; gap: 12px; }
+    .sync-badge { align-self: flex-start; }
     .main-nav { width: 100%; }
     .main-nav button { flex: 1; justify-content: center; }
     .filter-bar { flex-direction: column; align-items: stretch; }
@@ -621,6 +734,42 @@
       <path d="M22 24h14M22 30h16M22 36h10"/>
       <circle cx="48" cy="46" r="8" stroke-dasharray="2 2"/>
     </symbol>
+    <symbol id="icon-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    </symbol>
+    <symbol id="icon-cloud-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17.5 19a4.5 4.5 0 1 0-1.4-8.78A6 6 0 1 0 6.5 19h11z"/>
+      <path d="m9 14 2 2 4-4"/>
+    </symbol>
+    <symbol id="icon-cloud-sync" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17.5 19a4.5 4.5 0 1 0-1.4-8.78A6 6 0 1 0 6.5 19h11z"/>
+      <path d="M9 14a3 3 0 0 1 5-1.5"/>
+      <path d="M14 11v2.5h-2.5"/>
+    </symbol>
+    <symbol id="icon-cloud-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17.5 19a4.5 4.5 0 1 0-1.4-8.78A6 6 0 1 0 6.5 19h11z"/>
+      <path d="m9 14 5-5M14 14l-5-5"/>
+    </symbol>
+    <symbol id="icon-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17.5 19a4.5 4.5 0 1 0-1.4-8.78A6 6 0 1 0 6.5 19h11z"/>
+    </symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/>
+      <path d="M21 3v5h-5"/>
+      <path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/>
+      <path d="M3 21v-5h5"/>
+    </symbol>
+    <symbol id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </symbol>
+    <symbol id="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 10 8 10 8a13.16 13.16 0 0 1-1.67 2.68"/>
+      <path d="M6.6 6.6A13.13 13.13 0 0 0 2 12s3 8 10 8a9.12 9.12 0 0 0 5.4-1.6"/>
+      <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/>
+      <path d="M2 2l20 20"/>
+    </symbol>
   </defs>
 </svg>
 
@@ -634,16 +783,22 @@
         <p>Copy · Archive · Vault</p>
       </div>
     </div>
-    <nav class="main-nav" id="mainNav">
-      <button data-section="product" class="active">
-        <svg><use href="#icon-doc"/></svg>
-        产品文案
+    <div class="header-right">
+      <button class="sync-badge" id="syncBadge" onclick="openSettings()" title="点击设置同步">
+        <svg id="syncIcon"><use href="#icon-cloud-off"/></svg>
+        <span id="syncText">未配置同步</span>
       </button>
-      <button data-section="viral">
-        <svg><use href="#icon-star"/></svg>
-        爆款收藏
-      </button>
-    </nav>
+      <nav class="main-nav" id="mainNav">
+        <button data-section="product" class="active">
+          <svg><use href="#icon-doc"/></svg>
+          产品文案
+        </button>
+        <button data-section="viral">
+          <svg><use href="#icon-star"/></svg>
+          爆款收藏
+        </button>
+      </nav>
+    </div>
   </header>
 
   <!-- ========== PRODUCT SECTION ========== -->
@@ -774,6 +929,60 @@
   </div>
 </div>
 
+<!-- ========== SETTINGS MODAL ========== -->
+<div class="modal" id="settingsModal" hidden>
+  <div class="modal-backdrop" onclick="closeSettings()"></div>
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2>云端同步设置</h2>
+      <button class="icon-btn" onclick="closeSettings()" aria-label="关闭">
+        <svg><use href="#icon-x"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="settings-intro">
+        <p>开启同步后，你的文案会自动备份到 GitHub 仓库，多台设备打开都能看到同一份数据。</p>
+        <p style="margin-top:8px;">配置只需做一次，之后自动运行。</p>
+      </div>
+
+      <form id="settingsForm">
+        <div class="form-field">
+          <label class="form-label">GitHub 用户名</label>
+          <input type="text" name="owner" class="form-input" id="syncOwner" placeholder="例：your-username" autocomplete="off">
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">仓库名</label>
+          <input type="text" name="repo" class="form-input" id="syncRepo" placeholder="例：copy-archive" autocomplete="off">
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Personal Access Token (PAT)</label>
+          <div class="pat-input-wrap">
+            <input type="password" name="pat" class="form-input" id="syncPat" placeholder="ghp_... 或 github_pat_..." autocomplete="off">
+            <button type="button" class="pat-toggle" onclick="togglePatVisibility()" aria-label="显示/隐藏">
+              <svg id="patEyeIcon"><use href="#icon-eye"/></svg>
+            </button>
+          </div>
+          <div class="form-hint">
+            没有 PAT？<a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">点这里生成</a>，权限选 Repository → Contents → Read and write
+          </div>
+        </div>
+
+        <div id="settingsStatus" class="settings-status" hidden></div>
+
+        <div class="modal-actions" style="justify-content: space-between;">
+          <button type="button" class="btn-text danger-text" id="disconnectBtn" onclick="disconnectSync()" hidden>断开同步</button>
+          <div style="display:flex;gap:10px;margin-left:auto;">
+            <button type="button" class="btn btn-outline" onclick="closeSettings()">取消</button>
+            <button type="submit" class="btn" id="saveSyncBtn">保存并测试</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- Toast -->
 <div class="toast" id="toast">
   <svg><use href="#icon-check"/></svg>
@@ -783,6 +992,8 @@
 <script>
   /* ============ State ============ */
   const STORAGE_KEY = 'copyArchive.v1';
+  const SYNC_KEY = 'copyArchive.sync';
+  const REMOTE_PATH = 'data.json';
 
   const defaultState = {
     product: {
@@ -795,7 +1006,8 @@
       product: 'S5',
       type: 'graphic',
       viralType: 'own'
-    }
+    },
+    lastModified: 0
   };
 
   function loadState() {
@@ -819,7 +1031,8 @@
           own: parsed.viral?.own ?? [],
           competitor: parsed.viral?.competitor ?? []
         },
-        ui: { ...defaultState.ui, ...(parsed.ui ?? {}) }
+        ui: { ...defaultState.ui, ...(parsed.ui ?? {}) },
+        lastModified: parsed.lastModified ?? 0
       };
     } catch (e) {
       console.error('Load failed:', e);
@@ -827,9 +1040,14 @@
     }
   }
 
-  function saveState() {
+  // saveState: 'data' updates lastModified and triggers sync; 'ui' is local-only (no sync)
+  function saveState(scope = 'data') {
     try {
+      if (scope === 'data') {
+        state.lastModified = Date.now();
+      }
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      if (scope === 'data') scheduleSync();
     } catch (e) {
       console.error('Save failed:', e);
       toast('保存失败，可能存储空间已满', true);
@@ -872,7 +1090,7 @@
     const btn = e.target.closest('button[data-section]');
     if (!btn) return;
     state.ui.section = btn.dataset.section;
-    saveState();
+    saveState('ui');
     renderNav();
     renderAll();
   });
@@ -890,7 +1108,7 @@
     const btn = e.target.closest('button[data-product]');
     if (!btn) return;
     state.ui.product = btn.dataset.product;
-    saveState();
+    saveState('ui');
     renderProductPills();
     renderProduct();
   });
@@ -898,7 +1116,7 @@
     const btn = e.target.closest('button[data-type]');
     if (!btn) return;
     state.ui.type = btn.dataset.type;
-    saveState();
+    saveState('ui');
     renderTypePills();
     renderProduct();
   });
@@ -906,7 +1124,7 @@
     const btn = e.target.closest('button[data-viral]');
     if (!btn) return;
     state.ui.viralType = btn.dataset.viral;
-    saveState();
+    saveState('ui');
     renderViralPills();
     renderViral();
   });
@@ -1247,6 +1465,311 @@
     toast(`已导出 ${own.length + comp.length} 条文案`);
   }
 
+  /* ============================================================
+     Cloud Sync (GitHub) — local-first with background sync
+     ============================================================ */
+
+  // Sync config (PAT, owner, repo) stored separately from data state
+  function loadSyncConfig() {
+    try {
+      const raw = localStorage.getItem(SYNC_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch { return null; }
+  }
+  function saveSyncConfig(cfg) {
+    localStorage.setItem(SYNC_KEY, JSON.stringify(cfg));
+  }
+  function clearSyncConfig() {
+    localStorage.removeItem(SYNC_KEY);
+  }
+
+  let syncCfg = loadSyncConfig();
+  let remoteSha = null;       // sha of data.json on GitHub (needed for updates)
+  let syncTimer = null;
+  let isSyncing = false;
+  let pendingSync = false;    // queue another sync if we're mid-flight
+
+  // ---- UI: status badge ----
+  function setSyncStatus(status, text) {
+    const badge = document.getElementById('syncBadge');
+    const icon = document.getElementById('syncIcon');
+    const txt = document.getElementById('syncText');
+    badge.classList.remove('synced', 'syncing', 'error');
+    let useIcon = 'icon-cloud-off';
+    if (status === 'synced') { badge.classList.add('synced'); useIcon = 'icon-cloud-check'; }
+    else if (status === 'syncing') { badge.classList.add('syncing'); useIcon = 'icon-cloud-sync'; }
+    else if (status === 'error') { badge.classList.add('error'); useIcon = 'icon-cloud-off'; }
+    else if (status === 'idle') { useIcon = 'icon-cloud'; }
+    icon.innerHTML = `<use href="#${useIcon}"/>`;
+    txt.textContent = text;
+  }
+
+  // ---- GitHub API helpers ----
+  async function ghGet() {
+    const url = `https://api.github.com/repos/${syncCfg.owner}/${syncCfg.repo}/contents/${REMOTE_PATH}`;
+    const res = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${syncCfg.pat}`,
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    });
+    if (res.status === 404) return { notFound: true };
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || `GitHub API ${res.status}`);
+    }
+    const json = await res.json();
+    // content is base64-encoded
+    const decoded = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ''))));
+    return { data: JSON.parse(decoded), sha: json.sha };
+  }
+
+  async function ghPut(data, sha) {
+    const url = `https://api.github.com/repos/${syncCfg.owner}/${syncCfg.repo}/contents/${REMOTE_PATH}`;
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+    const body = {
+      message: `chore: sync archive (${new Date().toISOString()})`,
+      content,
+      ...(sha ? { sha } : {})
+    };
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${syncCfg.pat}`,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+        'X-GitHub-Api-Version': '2022-11-28'
+      },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || `GitHub API ${res.status}`);
+    }
+    const json = await res.json();
+    return json.content.sha;
+  }
+
+  // ---- Pull: called on init ----
+  async function pullFromRemote() {
+    if (!syncCfg) return;
+    setSyncStatus('syncing', '同步中…');
+    try {
+      const result = await ghGet();
+      if (result.notFound) {
+        // First time: push current local as initial
+        setSyncStatus('syncing', '初始化云端…');
+        const newSha = await ghPut(packForSync(), null);
+        remoteSha = newSha;
+        setSyncStatus('synced', '已同步 · 刚刚');
+        return;
+      }
+      remoteSha = result.sha;
+      const remote = result.data;
+      // Compare lastModified
+      const localTs = state.lastModified || 0;
+      const remoteTs = remote.lastModified || 0;
+      if (remoteTs > localTs) {
+        // Remote is newer — replace local
+        unpackFromSync(remote);
+        saveStateLocalOnly();
+        renderAll();
+        renderProductPills(); renderTypePills(); renderViralPills(); renderNav();
+        setSyncStatus('synced', '已同步 · 拉取最新');
+      } else if (localTs > remoteTs) {
+        // Local is newer — push it
+        const newSha = await ghPut(packForSync(), remoteSha);
+        remoteSha = newSha;
+        setSyncStatus('synced', '已同步 · 刚刚');
+      } else {
+        setSyncStatus('synced', '已同步');
+      }
+    } catch (err) {
+      console.error('Pull failed:', err);
+      setSyncStatus('error', '同步失败 · 点击查看');
+    }
+  }
+
+  function packForSync() {
+    return {
+      product: state.product,
+      viral: state.viral,
+      lastModified: state.lastModified,
+      version: 1
+    };
+  }
+  function unpackFromSync(remote) {
+    state.product = remote.product || defaultState.product;
+    state.viral = remote.viral || defaultState.viral;
+    state.lastModified = remote.lastModified || Date.now();
+  }
+  function saveStateLocalOnly() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) { console.error(e); }
+  }
+
+  // ---- Push: debounced, called after any data change ----
+  function scheduleSync() {
+    if (!syncCfg) return;
+    setSyncStatus('syncing', '同步中…');
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(doSync, 1500);
+  }
+
+  async function doSync() {
+    if (!syncCfg) return;
+    if (isSyncing) { pendingSync = true; return; }
+    isSyncing = true;
+    try {
+      // If we don't have sha yet, fetch first
+      if (!remoteSha) {
+        const res = await ghGet();
+        if (!res.notFound) remoteSha = res.sha;
+      }
+      const newSha = await ghPut(packForSync(), remoteSha);
+      remoteSha = newSha;
+      setSyncStatus('synced', '已同步 · 刚刚');
+    } catch (err) {
+      console.error('Push failed:', err);
+      // Sha conflict — try refetch once
+      if (String(err.message).includes('does not match')) {
+        try {
+          const res = await ghGet();
+          if (!res.notFound) {
+            // Remote moved on — pull and re-merge would be ideal; for now, take remote then push local
+            remoteSha = res.sha;
+            const newSha = await ghPut(packForSync(), remoteSha);
+            remoteSha = newSha;
+            setSyncStatus('synced', '已同步 · 刚刚');
+            isSyncing = false;
+            if (pendingSync) { pendingSync = false; scheduleSync(); }
+            return;
+          }
+        } catch (e2) {
+          console.error('Recovery failed:', e2);
+        }
+      }
+      setSyncStatus('error', '同步失败 · 点击查看');
+    } finally {
+      isSyncing = false;
+      if (pendingSync) {
+        pendingSync = false;
+        scheduleSync();
+      }
+    }
+  }
+
+  // ---- Settings modal ----
+  function openSettings() {
+    const modal = document.getElementById('settingsModal');
+    const cfg = syncCfg || {};
+    document.getElementById('syncOwner').value = cfg.owner || autoDetectOwner();
+    document.getElementById('syncRepo').value = cfg.repo || autoDetectRepo();
+    document.getElementById('syncPat').value = cfg.pat || '';
+    document.getElementById('disconnectBtn').hidden = !syncCfg;
+    document.getElementById('settingsStatus').hidden = true;
+    modal.hidden = false;
+  }
+  function closeSettings() {
+    document.getElementById('settingsModal').hidden = true;
+  }
+  function togglePatVisibility() {
+    const input = document.getElementById('syncPat');
+    const icon = document.getElementById('patEyeIcon');
+    const showing = input.type === 'text';
+    input.type = showing ? 'password' : 'text';
+    icon.innerHTML = `<use href="#${showing ? 'icon-eye' : 'icon-eye-off'}"/>`;
+  }
+  function autoDetectOwner() {
+    const host = window.location.hostname;
+    if (host.endsWith('.github.io')) return host.replace('.github.io', '');
+    return '';
+  }
+  function autoDetectRepo() {
+    const host = window.location.hostname;
+    const path = window.location.pathname;
+    if (host.endsWith('.github.io')) {
+      const m = path.match(/^\/([^\/]+)/);
+      if (m) return m[1];
+      // Or username.github.io repo
+      return host.replace('.github.io', '') + '.github.io';
+    }
+    return '';
+  }
+  function showSettingsStatus(type, msg) {
+    const el = document.getElementById('settingsStatus');
+    el.className = 'settings-status ' + type;
+    el.textContent = msg;
+    el.hidden = false;
+  }
+  function disconnectSync() {
+    if (!confirm('确定要断开同步吗？本地数据不会丢失，但不再上传到 GitHub。')) return;
+    clearSyncConfig();
+    syncCfg = null;
+    remoteSha = null;
+    setSyncStatus('idle', '未配置同步');
+    closeSettings();
+    toast('已断开同步');
+  }
+
+  document.getElementById('settingsForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const owner = document.getElementById('syncOwner').value.trim();
+    const repo = document.getElementById('syncRepo').value.trim();
+    const pat = document.getElementById('syncPat').value.trim();
+    if (!owner || !repo || !pat) {
+      showSettingsStatus('error', '请填写完整信息');
+      return;
+    }
+    const btn = document.getElementById('saveSyncBtn');
+    btn.disabled = true;
+    btn.textContent = '测试中…';
+    showSettingsStatus('info', '正在连接 GitHub…');
+
+    const testCfg = { owner, repo, pat };
+    try {
+      // Test by trying to read the repo
+      const url = `https://api.github.com/repos/${owner}/${repo}`;
+      const res = await fetch(url, {
+        headers: {
+          'Authorization': `Bearer ${pat}`,
+          'Accept': 'application/vnd.github+json'
+        }
+      });
+      if (res.status === 401) throw new Error('PAT 无效或已过期');
+      if (res.status === 404) throw new Error('仓库不存在，或 PAT 没有该仓库权限');
+      if (!res.ok) throw new Error('GitHub 返回错误：' + res.status);
+
+      // Save config
+      syncCfg = testCfg;
+      saveSyncConfig(syncCfg);
+      remoteSha = null;
+
+      showSettingsStatus('success', '连接成功！正在同步…');
+      btn.textContent = '保存并测试';
+      btn.disabled = false;
+      await pullFromRemote();
+      setTimeout(() => {
+        closeSettings();
+        toast('云端同步已开启');
+      }, 800);
+    } catch (err) {
+      showSettingsStatus('error', '连接失败：' + err.message);
+      btn.textContent = '保存并测试';
+      btn.disabled = false;
+    }
+  });
+
+  // Esc closes settings too
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !document.getElementById('settingsModal').hidden) {
+      closeSettings();
+    }
+  });
+
   /* ============ Init ============ */
   function init() {
     renderNav();
@@ -1260,6 +1783,14 @@
       clearTimeout(window._rs);
       window._rs = setTimeout(trimExpandButtons, 150);
     });
+
+    // Sync init
+    if (syncCfg) {
+      setSyncStatus('syncing', '正在连接…');
+      pullFromRemote();
+    } else {
+      setSyncStatus('idle', '未配置同步');
+    }
   }
 
   init();
