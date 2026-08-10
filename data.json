@@ -1,14 +1,7 @@
 {
   "product": {
     "S5": {
-      "graphic": [
-        {
-          "id": "e_mpp7e1a7vtqe",
-          "title": "指令。",
-          "content": "不错，生成一张其它的角度、姿势以及动作摆拍，眼镜要继续戴着。同比例3:4大小!!!4K画质。",
-          "createdAt": 1779955235071
-        }
-      ],
+      "graphic": [],
       "video": []
     },
     "X1": {
@@ -91,6 +84,6 @@
     ],
     "competitor": []
   },
-  "lastModified": 1786333452403,
+  "lastModified": 1786333454837,
   "version": 1
 }
